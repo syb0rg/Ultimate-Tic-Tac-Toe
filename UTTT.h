@@ -1,3 +1,6 @@
+#ifndef UTTT_H
+#define UTTT_H
+
 #define ROWS 9
 #define COLS 9
 
@@ -10,5 +13,7 @@ void fillSubBoard(Board board, int x, int y, char c);
 int getBound(int in);
 void printBoard(Board board);
 static int checkMeta(MetaBoard meta);
-static int checkBoard(Board board, MetaBoard meta, int player, int row, int column;
+static int checkBoard(Board board, MetaBoard meta, int player, int row, int column);
 MoveStatus validCoords(Board board, int row, int column, int rowBound, int columnBound);
+
+#endif // UTTT_H
