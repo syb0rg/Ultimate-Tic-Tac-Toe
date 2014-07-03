@@ -184,6 +184,4 @@ int main(void)
 
     if(!winner) printf("The game is a draw\n");
     else printf("Player %d has won\n", winner);
-
-    return 0;
 }
