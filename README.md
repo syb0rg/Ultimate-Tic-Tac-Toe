@@ -1,4 +1,4 @@
-#*Ultimate Tic-Tac-Toe™*
+#*Ultimate Tic-Tac-Toe <sup>™</sup>*
 
 Tic-Tac-Toe is boring. So here is *Ultimate Tic-Tac-Toe*, a whole different story.
 
