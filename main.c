@@ -143,19 +143,19 @@ int main(void)
             {
                 case NOT_A_DIGIT:
                     printf("Invalid input.  Re-enter: ");
-                    invalid = 1;
+                    invalid = NOT_A_DIGIT;
                     break;
                 case NOT_IN_BOARD:
                     printf("Out of board's bounds. Re-enter: ");
-                    invalid = 2;
+                    invalid = NOT_IN_BOARD;
                     break;
                 case SPACE_OCCUPIED:
                     printf("There is already an %c there.  Re-enter: ", board[row][column]);
-                    invalid = 3;
+                    invalid = SPACE_OCCUPIED;
                     break;
                 case OUT_OF_BOUNDS:
                     printf("Your move was in the wrong sub-board.  Re-enter: ");
-                    invalid = 4;
+                    invalid = OUT_OF_BOUNDS;
                     break;
 				case VALID:
                 default:
