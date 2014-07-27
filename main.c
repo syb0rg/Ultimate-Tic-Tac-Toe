@@ -38,7 +38,14 @@ int getBound(int in)
 
 void printBoard(Board board)
 {
-    printf("\n=============||===========||=============\n");
+#warning Fix dynamic horizontal line printing
+	for (int column = 0; column < COLS; ++column)
+	{
+		printf("====");
+		if(0 == (column + 1) % 3) printf("||");
+	}
+	printf("\n");
+	
     for (int row = 0; row < ROWS; ++row)
     {
         printf("||");
@@ -46,9 +53,9 @@ void printBoard(Board board)
         {
             if ('-' == board[row][column]) printf("%d,%d|", row, column);
             else printf(" %c |", board[row][column]);
-            if (0 == (column+1) % 3) printf("|");
+            if (0 == (column + 1) % 3) printf("|");
         }
-        if (0 == (row+1) % 3) printf("\n=============||===========||=============\n");
+        if (0 == (row + 1) % 3) printf("\n=============||===========||=============\n");
         else printf("\n-----|---|---||---|---|---||---|---|-----\n");
     }
 }
