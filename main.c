@@ -95,9 +95,9 @@ static int checkBoard(Board board, MetaBoard meta, int player, int row, int colu
 			if(oCounter == 9 || xCounter == 9) status = 1; // make it so player can move anywhere
 			if (oCounter + xCounter == 9)
 			{
-				status = 1; // make it so player can move anywhere
 				fillSubBoard(board, row, column, marks[2]); // set the board to a neutral character
 				meta[getBound(row)][getBound(column)] = marks[2]; // set the metaboard coords to a tied state
+				return checkMeta(meta); // we don't need to check if board had been won, we just found it was a tie
 			}
         }
     }
