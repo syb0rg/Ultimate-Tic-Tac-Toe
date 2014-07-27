@@ -38,13 +38,7 @@ int getBound(int in)
 
 void printBoard(Board board)
 {
-#warning Fix dynamic horizontal line printing
-	for (int column = 0; column < COLS; ++column)
-	{
-		printf("====");
-		if(0 == (column + 1) % 3) printf("||");
-	}
-	printf("\n");
+printf("\n=============||===========||=============\n");
 	
     for (int row = 0; row < ROWS; ++row)
     {
@@ -156,11 +150,19 @@ int main(void)
 	int column = 0;
 	int rowBound = -1; // set initially so player 1 can move anywhere
 	int columnBound = -1; // set initially so player 1 can move anywhere
-	int invalid = 0;
+	int error = 0;
     char tempRow = '\0';
 	char tempColumn = '\0';
     Board board;
     MetaBoard meta;
+	static char const *errors[] =
+	{
+		0,
+		"Invalid Input.",
+		"Out of board's bounds.",
+		"That space is already used.",
+		"Your move was in the wrong sub-board."
+	};
 
     // initialize boards and fill with '-'
     memset(board, '-', ROWS * COLS);
@@ -178,30 +180,8 @@ int main(void)
             while (getchar() != '\n'); // pick up superfluous input so we don't run into problems when we scan for input again
             row = abs((int) tempRow - '0');
             column = abs((int) tempColumn - '0');
-            invalid = 0;
-            switch (validCoords(board, row, column, rowBound, columnBound))
-            {
-                case NOT_A_DIGIT:
-                    printf("Invalid input.  Re-enter: ");
-                    invalid = NOT_A_DIGIT;
-                    break;
-                case NOT_IN_BOARD:
-                    printf("Out of board's bounds. Re-enter: ");
-                    invalid = NOT_IN_BOARD;
-                    break;
-                case SPACE_OCCUPIED:
-                    printf("There is already an %c there.  Re-enter: ", board[row][column]);
-                    invalid = SPACE_OCCUPIED;
-                    break;
-                case OUT_OF_BOUNDS:
-                    printf("Your move was in the wrong sub-board.  Re-enter: ");
-                    invalid = OUT_OF_BOUNDS;
-                    break;
-				case VALID:
-                default:
-                    break;
-            }
-        } while (invalid);
+			if(0 != (error = validCoords(board, row, column, rowBound, columnBound))) printf("%s Re-enter:", errors[error]);
+        } while (error);
 
         board[row][column] = marks[player];
         switch(checkBoard(board, meta, player, row, column))
