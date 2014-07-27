@@ -39,10 +39,10 @@ int getBound(int in)
 void printBoard(Board board)
 {
     printf("\n=============||===========||=============\n");
-    for (int row = 0; row < ROWS; row++)
+    for (int row = 0; row < ROWS; ++row)
     {
         printf("||");
-        for (int column = 0; column < COLS; column++)
+        for (int column = 0; column < COLS; ++column)
         {
             if (board[row][column] == '-') printf("%d,%d|", row, column);
             else printf(" %c |", board[row][column]);
@@ -60,7 +60,7 @@ static int checkMeta(MetaBoard meta)
     const int xDelta[ROWS - 1] = {1,  1,  1,  0,  0,  0,  1,  1};
     const int yDelta[COLS - 1] = {0,  0,  0,  1,  1,  1,  1,  1};
     static int startx, starty, deltax, deltay;
-    for (int trip = 0; trip < ROWS - 1; trip++)
+    for (int trip = 0; trip < ROWS - 1; ++trip)
     {
         startx = xStart[trip];
         starty = yStart[trip];
@@ -85,7 +85,7 @@ static int checkBoard(Board board, MetaBoard meta, int player, int row, int colu
 	row -= (row % 3); // quickly set x to left bound of sub-board
 	column -= (column % 3); // quickly set y to upper bound of sub-board
 
-    for (int trip = 0; trip < ROWS - 1; trip++)
+    for (int trip = 0; trip < ROWS - 1; ++trip)
     {
 
         startx = row + xStart[trip];
@@ -127,7 +127,7 @@ int main(void)
     memset(meta, '-', (ROWS / 3) * (COLS / 3));
 
     // game loop
-    for (int turn = 0; turn < ROWS * COLS && !winner; turn++)
+    for (int turn = 0; turn < ROWS * COLS && !winner; ++turn)
     {
         int player = turn % 2;
         printBoard(board);
