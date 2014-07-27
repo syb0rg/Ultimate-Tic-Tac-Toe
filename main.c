@@ -9,7 +9,7 @@
 typedef char Board[ROWS][COLS];
 typedef char MetaBoard[ROWS / 3][COLS / 3];
 typedef enum {VALID, NOT_A_DIGIT, NOT_IN_BOARD, SPACE_OCCUPIED, OUT_OF_BOUNDS} MoveStatus;
-static const char marks[] = {'O', 'X'};
+static const char marks[3] = {'O', 'X', '#'};
 
 void fillSubBoard(Board board, int x, int y, char c);
 int getBound(int in);
@@ -80,19 +80,25 @@ static int checkBoard(Board board, MetaBoard meta, int player, int row, int colu
     const int yStart[COLS - 1] = {0,  1,  2,  0,  0,  0,  0,  2};
     const int xDelta[ROWS - 1] = {1,  1,  1,  0,  0,  0,  1,  1};
     const int yDelta[COLS - 1] = {0,  0,  0,  1,  1,  1,  1,  1};
-    static int startx, starty, deltax, deltay, oCounter, xCounter, status = 0;
+	int startx, starty, deltax, deltay, oCounter = 0, xCounter = 0, status = 0;
 
 	row -= (row % 3); // quickly set x to left bound of sub-board
 	column -= (column % 3); // quickly set y to upper bound of sub-board
 
 	// check if board has already been won or is a tie
-	for (int rowMax = row + 2, startx = row; startx <= rowMax; ++startx)
+	for (int rowMax = row + 2, startx = row; startx <= rowMax; ++startx) // uses startx value to reduce the number of variables
     {
-        for (int columnMax = column + 2, starty = column; starty <= columnMax; ++starty)
+        for (int columnMax = column + 2, starty = column; starty <= columnMax; ++starty) // uses starty to reduce the number of variables
         {
             if(board[startx][starty] == marks[0]) ++oCounter;
 			if(board[startx][starty] == marks[1]) ++xCounter;
-			if(oCounter == 9 || xCounter == 9 || oCounter + xCounter == 9) status = 1;
+			if(oCounter == 9 || xCounter == 9) status = 1; // make it so player can move anywhere
+			if (oCounter + xCounter == 9)
+			{
+				status = 1; // make it so player can move anywhere
+				fillSubBoard(board, row, column, marks[2]); // set the board to a neutral character
+				meta[getBound(row)][getBound(column)] = marks[2]; // set the metaboard coords to a tied state
+			}
         }
     }
 
