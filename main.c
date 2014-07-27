@@ -59,7 +59,11 @@ static int checkMeta(MetaBoard meta)
     const int yStart[COLS - 1] = {0,  1,  2,  0,  0,  0,  0,  2};
     const int xDelta[ROWS - 1] = {1,  1,  1,  0,  0,  0,  1,  1};
     const int yDelta[COLS - 1] = {0,  0,  0,  1,  1,  1,  1,  1};
-    static int startx, starty, deltax, deltay;
+    int startx = 0;
+	int starty = 0;
+	int deltax = 0;
+	int deltay = 0;
+
     for (int trip = 0; trip < ROWS - 1; ++trip)
     {
         startx = xStart[trip];
@@ -80,7 +84,13 @@ static int checkBoard(Board board, MetaBoard meta, int player, int row, int colu
     const int yStart[COLS - 1] = {0,  1,  2,  0,  0,  0,  0,  2};
     const int xDelta[ROWS - 1] = {1,  1,  1,  0,  0,  0,  1,  1};
     const int yDelta[COLS - 1] = {0,  0,  0,  1,  1,  1,  1,  1};
-	int startx, starty, deltax, deltay, oCounter = 0, xCounter = 0, status = 0;
+	int startx = 0;
+	int starty = 0;
+	int deltax = 0;
+	int deltay = 0;
+	int oCounter = 0;
+	int xCounter = 0;
+	int status = 0;
 
 	row -= (row % 3); // quickly set x to left bound of sub-board
 	column -= (column % 3); // quickly set y to upper bound of sub-board
