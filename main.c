@@ -92,12 +92,11 @@ static int checkBoard(Board board, MetaBoard meta, int player, int row, int colu
         {
             if(board[startx][starty] == marks[0]) ++oCounter;
 			if(board[startx][starty] == marks[1]) ++xCounter;
-			if (oCounter == 9 || xCounter == 9 || oCounter + xCounter == 9)
-			{
-				status = 1;
-			}
+			if(oCounter == 9 || xCounter == 9 || oCounter + xCounter == 9) status = 1;
         }
     }
+
+	// check if board has been won this round
     for (int trip = 0; trip < ROWS - 1; ++trip)
     {
         startx = row + xStart[trip];
