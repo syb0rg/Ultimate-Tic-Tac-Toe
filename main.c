@@ -104,13 +104,13 @@ static int checkBoard(Board board, MetaBoard meta, int player, int row, int colu
 
 MoveStatus validCoords(Board board, int row, int column, int rowBound, int columnBound)
 {
-    if (!isdigit((char)(((int)'0') + row)) && !isdigit((char)(((int)'0') + column))) return NOT_A_DIGIT; // supplied coordinates aren't digits 1-9
-    else if (row > ROWS - 1 || column > COLS - 1) return NOT_IN_BOARD; // supplied coordinates aren't within the bounds of the board
-    else if (board[row][column] != '-') return SPACE_OCCUPIED; // supplied coordinates are occupied by another character
-    else if (rowBound == -1 && columnBound == -1) return VALID; // supplied coordinates can move anywhere
+    if (!isdigit((char)(((int)'0') + row)) && !isdigit((char)(((int)'0') + column))) return NOT_A_DIGIT; // supplied coords aren't digits 1-9
+    else if (row > ROWS - 1 || column > COLS - 1) return NOT_IN_BOARD; // supplied coords aren't within the bounds of the board
+    else if (board[row][column] != '-') return SPACE_OCCUPIED; // supplied coords are occupied by another character
+    else if (rowBound == -1 && columnBound == -1) return VALID; // supplied coords can move anywhere
     else if (((row > rowBound * 3 + 2 || column > columnBound * 3 + 2) ||
               (row < rowBound * 3 || column < columnBound * 3)) &&
-             (rowBound >= 0 && columnBound >= 0)) return OUT_OF_BOUNDS; // coordinates aren't within the sub-board specified by the previous move
+             (rowBound >= 0 && columnBound >= 0)) return OUT_OF_BOUNDS; // coords aren't within the sub-board specified by the previous move
     else return VALID; // didn't fail anywhere else, so coords are valid
 }
 
