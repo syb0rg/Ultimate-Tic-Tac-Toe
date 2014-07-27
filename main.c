@@ -139,7 +139,7 @@ static int checkBoard(Board board, MetaBoard meta, int player, int row, int colu
 
 MoveStatus validCoords(Board board, int row, int column, int rowBound, int columnBound)
 {
-    if (!isdigit((char)(((int)'0') + row)) && !isdigit((char)(((int)'0') + column))) return NOT_A_DIGIT; // supplied coords aren't digits 1-9
+    if (!isdigit((unsigned char)(((int)'0') + row)) && !isdigit((unsigned char)(((int)'0') + column))) return NOT_A_DIGIT; // supplied coords aren't digits 1-9
     else if (row > ROWS - 1 || column > COLS - 1) return NOT_IN_BOARD; // supplied coords aren't within the bounds of the board
     else if ('-' != board[row][column]) return SPACE_OCCUPIED; // supplied coords are occupied by another character
     else if (-1 == rowBound && -1 == columnBound) return VALID; // supplied coords can move anywhere
