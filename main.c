@@ -44,11 +44,11 @@ void printBoard(Board board)
         printf("||");
         for (int column = 0; column < COLS; ++column)
         {
-            if (board[row][column] == '-') printf("%d,%d|", row, column);
+            if ('-' == board[row][column]) printf("%d,%d|", row, column);
             else printf(" %c |", board[row][column]);
             if (0 == (column+1) % 3) printf("|");
         }
-        if ((row+1) % 3 == 0) printf("\n=============||===========||=============\n");
+        if (0 == (row+1) % 3) printf("\n=============||===========||=============\n");
         else printf("\n-----|---|---||---|---|---||---|---|-----\n");
     }
 }
@@ -71,7 +71,7 @@ static int checkMeta(MetaBoard meta)
         deltax = xDelta[trip];
         deltay = yDelta[trip];
         // main logic to check if a subboard has a winner
-        if (meta[startx][starty] != '-' &&
+        if ('-' != meta[startx][starty] &&
             meta[startx][starty] == meta[startx + deltax][starty + deltay] &&
             meta[startx][starty] == meta[startx + deltax + deltax][starty + deltay + deltay]) return 1;
     }
@@ -102,8 +102,8 @@ static int checkBoard(Board board, MetaBoard meta, int player, int row, int colu
         {
             if(board[startx][starty] == marks[0]) ++oCounter;
 			if(board[startx][starty] == marks[1]) ++xCounter;
-			if(oCounter == 9 || xCounter == 9) status = 1; // make it so player can move anywhere
-			if (oCounter + xCounter == 9)
+			if(9 == oCounter || 9 == xCounter) status = 1; // make it so player can move anywhere
+			if (9 == oCounter + xCounter)
 			{
 				fillSubBoard(board, row, column, marks[2]); // set the board to a neutral character
 				meta[getBound(row)][getBound(column)] = marks[2]; // set the metaboard coords to a tied state
@@ -119,7 +119,7 @@ static int checkBoard(Board board, MetaBoard meta, int player, int row, int colu
         starty = column + yStart[trip];
         deltax = xDelta[trip];
         deltay = yDelta[trip];
-        if (board[startx][starty] != '-' &&
+        if ('-' != board[startx][starty] &&
             board[startx][starty] == board[startx + deltax][starty + deltay] &&
             board[startx][starty] == board[startx + deltax + deltax][starty + deltay + deltay])
         {
@@ -134,8 +134,8 @@ MoveStatus validCoords(Board board, int row, int column, int rowBound, int colum
 {
     if (!isdigit((char)(((int)'0') + row)) && !isdigit((char)(((int)'0') + column))) return NOT_A_DIGIT; // supplied coords aren't digits 1-9
     else if (row > ROWS - 1 || column > COLS - 1) return NOT_IN_BOARD; // supplied coords aren't within the bounds of the board
-    else if (board[row][column] != '-') return SPACE_OCCUPIED; // supplied coords are occupied by another character
-    else if (rowBound == -1 && columnBound == -1) return VALID; // supplied coords can move anywhere
+    else if ('-' != board[row][column]) return SPACE_OCCUPIED; // supplied coords are occupied by another character
+    else if (-1 == rowBound && -1 == columnBound) return VALID; // supplied coords can move anywhere
     else if (((row > rowBound * 3 + 2 || column > columnBound * 3 + 2) ||
               (row < rowBound * 3 || column < columnBound * 3)) &&
              (rowBound >= 0 && columnBound >= 0)) return OUT_OF_BOUNDS; // coords aren't within the sub-board specified by the previous move
@@ -164,11 +164,11 @@ int main(void)
     {
         int player = turn % 2;
         printBoard(board);
-        printf("Player %d, enter the coordinates (x, y) to place %c: ", player + 1, (player==1) ? 'X' : 'O');
+        printf("Player %d, enter the coordinates (x, y) to place %c: ", player + 1, (1 == player) ? 'X' : 'O');
         do
         {
             scanf("%c, %c", &tempRow, &tempColumn);
-            for(; getchar() != '\n'; getchar()); // pick up superfluous input so we don't run into problems when we scan for input again
+            for(; '\n' != getchar(); getchar()); // pick up superfluous input so we don't run into problems when we scan for input again
             row = abs((int) tempRow - '0');
             column = abs((int) tempColumn - '0');
             invalid = 0;
