@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <ctype.h>
 
 #define ROWS 9
@@ -143,8 +144,14 @@ MoveStatus validCoords(Board board, int row, int column, int rowBound, int colum
 
 int main(void)
 {
-    int winner = 0, row = 0, column = 0, rowBound = -1, columnBound = -1, invalid = 0;
-    char tempRow = '\0', tempColumn = '\0';
+    int winner = 0;
+	int row = 0;
+	int column = 0;
+	int rowBound = -1; // set initially so player 1 can move anywhere
+	int columnBound = -1; // set initially so player 1 can move anywhere
+	int invalid = 0;
+    char tempRow = '\0';
+	char tempColumn = '\0';
     Board board;
     MetaBoard meta;
 
