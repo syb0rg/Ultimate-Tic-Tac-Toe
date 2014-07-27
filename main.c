@@ -175,7 +175,7 @@ int main(void)
         do
         {
             scanf("%c, %c", &tempRow, &tempColumn);
-            for(; '\n' != getchar(); getchar()); // pick up superfluous input so we don't run into problems when we scan for input again
+            while (getchar() != '\n'); // pick up superfluous input so we don't run into problems when we scan for input again
             row = abs((int) tempRow - '0');
             column = abs((int) tempColumn - '0');
             invalid = 0;
