@@ -22,9 +22,9 @@ void fillSubBoard(Board board, int x, int y, char c)
 {
 	x -= (x % 3); // quickly set x to left bound of sub-board
 	y -= (y % 3); // quickly set y to upper bound of sub-board
-    for (int rowMax = x + 2, row = x; row <= rowMax; row++)
+    for (int rowMax = x + 2, row = x; row <= rowMax; ++row)
     {
-        for (int columnMax = y + 2, column = y; column <= columnMax; column++)
+        for (int columnMax = y + 2, column = y; column <= columnMax; ++column)
         {
             board[row][column] = c;
         }
@@ -80,11 +80,24 @@ static int checkBoard(Board board, MetaBoard meta, int player, int row, int colu
     const int yStart[COLS - 1] = {0,  1,  2,  0,  0,  0,  0,  2};
     const int xDelta[ROWS - 1] = {1,  1,  1,  0,  0,  0,  1,  1};
     const int yDelta[COLS - 1] = {0,  0,  0,  1,  1,  1,  1,  1};
-    static int startx, starty, deltax, deltay;
+    static int startx, starty, deltax, deltay, oCounter, xCounter, status = 0;
 
 	row -= (row % 3); // quickly set x to left bound of sub-board
 	column -= (column % 3); // quickly set y to upper bound of sub-board
 
+	// check if board has already been won or is a tie
+	for (int rowMax = row + 2, startx = row; startx <= rowMax; ++startx)
+    {
+        for (int columnMax = column + 2, starty = column; starty <= columnMax; ++starty)
+        {
+            if(board[startx][starty] == marks[0]) ++oCounter;
+			if(board[startx][starty] == marks[1]) ++xCounter;
+			if (oCounter == 9 || xCounter == 9 || oCounter + xCounter == 9)
+			{
+				status = 1;
+			}
+        }
+    }
     for (int trip = 0; trip < ROWS - 1; ++trip)
     {
         startx = row + xStart[trip];
@@ -99,7 +112,7 @@ static int checkBoard(Board board, MetaBoard meta, int player, int row, int colu
             meta[getBound(row)][getBound(column)] = marks[player];
         }
     }
-    return checkMeta(meta); // always check if the game has a winner
+    return (status + checkMeta(meta)); // always check if the game has a winner
 }
 
 MoveStatus validCoords(Board board, int row, int column, int rowBound, int columnBound)
