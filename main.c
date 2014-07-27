@@ -129,7 +129,7 @@ int main(void)
     // game loop
     for (int turn = 0; turn < ROWS * COLS && !winner; turn++)
     {
-        int player = turn % 2;
+        int player = (turn % 2) + 1;
         printBoard(board);
         printf("Player %d, enter the coordinates (x, y) to place %c: ", player, (player==1) ? 'X' : 'O');
         do
