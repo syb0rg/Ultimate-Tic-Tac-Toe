@@ -80,14 +80,13 @@ static int checkBoard(Board board, MetaBoard meta, int player, int row, int colu
     const int yStart[COLS - 1] = {0,  1,  2,  0,  0,  0,  0,  2};
     const int xDelta[ROWS - 1] = {1,  1,  1,  0,  0,  0,  1,  1};
     const int yDelta[COLS - 1] = {0,  0,  0,  1,  1,  1,  1,  1};
-    static int startx, starty, deltax, deltay, status = 0;
+    static int startx, starty, deltax, deltay;
 
 	row -= (row % 3); // quickly set x to left bound of sub-board
 	column -= (column % 3); // quickly set y to upper bound of sub-board
 
     for (int trip = 0; trip < ROWS - 1; ++trip)
     {
-
         startx = row + xStart[trip];
         starty = column + yStart[trip];
         deltax = xDelta[trip];
@@ -98,10 +97,9 @@ static int checkBoard(Board board, MetaBoard meta, int player, int row, int colu
         {
             fillSubBoard(board, row, column, marks[player]);
             meta[getBound(row)][getBound(column)] = marks[player];
-            status = 1;
         }
     }
-    return (status + checkMeta(meta)); // always check if the game has a winner
+    return checkMeta(meta); // always check if the game has a winner
 }
 
 MoveStatus validCoords(Board board, int row, int column, int rowBound, int columnBound)
@@ -112,7 +110,7 @@ MoveStatus validCoords(Board board, int row, int column, int rowBound, int colum
     else if (rowBound == -1 && columnBound == -1) return VALID; // supplied coordinates can move anywhere
     else if (((row > rowBound * 3 + 2 || column > columnBound * 3 + 2) ||
               (row < rowBound * 3 || column < columnBound * 3)) &&
-             (rowBound > 0 && columnBound > 0)) return OUT_OF_BOUNDS; // coordinates aren't within the sub-board specified by the previous move
+             (rowBound >= 0 && columnBound >= 0)) return OUT_OF_BOUNDS; // coordinates aren't within the sub-board specified by the previous move
     else return VALID; // didn't fail anywhere else, so coords are valid
 }
 
@@ -122,6 +120,7 @@ int main(void)
     char tempRow = '\0', tempColumn = '\0';
     Board board;
     MetaBoard meta;
+
     // initialize boards and fill with '-'
     memset(board, '-', ROWS * COLS);
     memset(meta, '-', (ROWS / 3) * (COLS / 3));
