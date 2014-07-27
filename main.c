@@ -123,8 +123,8 @@ int main(void)
     Board board;
     MetaBoard meta;
     // initialize boards and fill with '-'
-    memset(board, '-', ROWS * COLS * sizeof(char));
-    memset(meta, '-', (ROWS / 3) * (COLS / 3) * sizeof(char));
+    memset(board, '-', ROWS * COLS);
+    memset(meta, '-', (ROWS / 3) * (COLS / 3));
 
     // game loop
     for (int turn = 0; turn < ROWS * COLS && !winner; turn++)
