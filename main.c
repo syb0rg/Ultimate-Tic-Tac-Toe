@@ -172,7 +172,7 @@ int main(void)
                 columnBound = -1;
                 break;
             case 2:
-                winner = player;
+                winner = player + 1;
                 break;
             default:
                 rowBound = row % 3;
