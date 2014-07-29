@@ -38,8 +38,8 @@ int getBound(int in)
 
 void printBoard(Board board)
 {
-printf("\n=============||===========||=============\n");
-	
+	printf("\n=============||===========||=============\n");
+
     for (int row = 0; row < ROWS; ++row)
     {
         printf("||");
