@@ -101,9 +101,9 @@ static int checkBoard(Board board, MetaBoard meta, int player, int row, int colu
     {
         for (int columnMax = column + 2, starty = column; starty <= columnMax; ++starty) // uses starty to reduce the number of variables
         {
-            if(board[startx][starty] == marks[0]) ++oCounter;
-			if(board[startx][starty] == marks[1]) ++xCounter;
-			if(9 == oCounter || 9 == xCounter) status = 1; // make it so player can move anywhere
+            if (board[startx][starty] == marks[0]) ++oCounter;
+			if (board[startx][starty] == marks[1]) ++xCounter;
+			if (9 == oCounter || 9 == xCounter) status = 1; // make it so player can move anywhere
 			if (9 == oCounter + xCounter)
 			{
 				fillSubBoard(board, row, column, marks[2]); // set the board to a neutral character
@@ -180,7 +180,7 @@ int main(void)
             while (getchar() != '\n'); // pick up superfluous input so we don't run into problems when we scan for input again
             row = abs((int) tempRow - '0');
             column = abs((int) tempColumn - '0');
-			if(0 != (error = validCoords(board, row, column, rowBound, columnBound))) printf("%s Re-enter:", errors[error]);
+			if (0 != (error = validCoords(board, row, column, rowBound, columnBound))) printf("%s Re-enter:", errors[error]);
         } while (error);
 
         board[row][column] = marks[player];
@@ -202,6 +202,6 @@ int main(void)
     }
     printBoard(board);
 
-    if(!winner) printf("The game is a draw\n");
+    if (!winner) printf("The game is a draw\n");
     else printf("Player %d has won\n", winner);
 }
